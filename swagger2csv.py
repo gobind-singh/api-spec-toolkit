@@ -15,7 +15,6 @@ def read_swagger_yaml(file_path):
 # Function to extract endpoints and HTTP methods from Swagger YAML
 def extract_endpoints(swagger_data):
     endpoints = []
-    base_path = swagger_data.get('servers', [{}])[0].get('url', '') if 'servers' in swagger_data else ''
 
     if 'paths' not in swagger_data:
         print("Invalid Swagger file: Missing 'paths' key.")
@@ -24,9 +23,11 @@ def extract_endpoints(swagger_data):
     for path, methods in swagger_data['paths'].items():
         for method, details in methods.items():
             if method.lower() in ['get', 'post', 'put', 'delete', 'patch', 'options', 'head']:
+                tags = details.get('tags', ['General'])
                 endpoint = {
+                    'Tag': ', '.join(tags),
                     'Method': method.upper(),
-                    'Path': base_path + path,
+                    'Path': path,  # Exclude base host from path
                     'Summary': details.get('summary', 'N/A'),
                     'Description': details.get('description', 'N/A')
                 }
@@ -36,7 +37,7 @@ def extract_endpoints(swagger_data):
 # Function to write extracted data to a CSV file
 def write_to_csv(output_file, endpoints):
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['Method', 'Path', 'Summary', 'Description']
+        fieldnames = ['Tag', 'Method', 'Path', 'Summary', 'Description']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
