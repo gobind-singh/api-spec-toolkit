@@ -54,7 +54,7 @@ cd api-spec-toolkit
 Run the script with the following command:
 
 ```bash
-python extractor.py <input_swagger.yaml> <output_file.csv>
+python3 extractor.py <input_swagger.yaml> <output_file.csv>
 ```
 
 Parameters:
