@@ -96,4 +96,3 @@ paths:
 | Users     | GET    | /users        | Get Users            | Fetch a list of users.       |
 | Users     | GET    | /users/{id}   | Get User by ID       | Fetch a user by their ID.    |
 | Orders    | POST   | /orders       | Create Order         | Create a new order.          |
-| Orders    | PUT    | /orders/{id}  | Update Order         | Update an existing order.    |
